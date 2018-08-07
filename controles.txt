@@ -1,0 +1,36 @@
+teclado + mouse:
+adelante 		- w
+atras/freno		- s
+doblar derecha		- a
+doblar izquierda	- d
+levantar cañon		- mouse forward
+bajar cañon		- mouse back
+girar cañon derecha	- mouse right
+girar caño izquierda	- mouse left
+disparo			- left mouse button
+
+------------------------------------------------
+
+control:
+adelante 		- left joystick forward
+atras/freno		- left joystick back
+doblar derecha		- left joystick right
+doblar izquierda	- left joystick left
+levantar cañon		- right joystick forward
+bajar cañon		- right joystick back
+girar cañon derecha	- right joystick right
+girar caño izquierda	- right joystick left
+disparo			- right trigger
+
+------------------------------------------------
+
+control manual (alternativo):
+adelante 		- left trigger + right trigger
+atras/freno		- left bumper + right bumper
+doblar derecha		- right trigger
+doblar izquierda	- left trigger
+levantar cañon		- right joystick forward
+bajar cañon		- right joystick back
+girar cañon derecha	- left joystick right
+girar caño izquierda	- left joystick left
+disparo			- A / X (lowest button)
