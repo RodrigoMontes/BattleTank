@@ -5,6 +5,7 @@
 #include "Tank.h"
 #include "CoreMinimal.h"
 #include "AIController.h"
+#include "GameFramework/Actor.h"
 
 /// siempre el ultimo include!!
 #include "TankAIController.generated.h"
@@ -17,6 +18,7 @@ class BATTLETANK_API ATankAIController : public AAIController
 	
 public:
 	ATank* GetControlledTank() const;
+	ATank* GetPlayerControlledTank() const;
 
 protected:
 	// virtual significa que puede ser ampliado por sus herederos
