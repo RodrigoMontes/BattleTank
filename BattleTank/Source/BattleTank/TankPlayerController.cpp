@@ -16,7 +16,7 @@ void ATankPlayerController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController possessing %s"), *ControlledTank->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("TankPlayerController possessing %s"), *ControlledTank->GetName());
 	}
 }
 
@@ -40,27 +40,59 @@ void ATankPlayerController::AimAtCrosshair()
 
 	if (GetSightRayHitLocation(OUT HitLocation))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming at %s"), *HitLocation.ToString());
-		//TODO implement turret movement for aim
+		GetControlledTank()->AimAt(HitLocation);
 	}
-
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& OutHitLocation) const
+bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& HitLocation) const
 {
-	OutHitLocation = FVector(1.0);  //TODO remove!
-
 	//find crosshair position
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(OUT ViewportSizeX, OUT ViewportSizeY);
 
 	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrossHairXLocation, ViewportSizeY * CrossHairYLocation);
+	
+	FVector LookDirection;
+	if (GetLookDirection(ScreenLocation, OUT LookDirection))
+	{
+		//UE_LOG(LogTemp, Warning, TEXT("Looking at %s"), *LookDirection.ToString());
+		GetLookVectorHitLocation(LookDirection, OUT HitLocation);
+	}
 
-	//"de-project" the screen position into world position
-
-	//cast a ray from crosshair position in de-projection direction
-		//if hit something
-			//return true and HitLocation equal to raycast hit location
-		//else return false
 	return true;
+}
+
+bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, OUT FVector & LookDirection) const
+{
+	FVector CameraWorldLocation; //not used but needed
+	return DeprojectScreenPositionToWorld(
+		ScreenLocation.X, 
+		ScreenLocation.Y, 
+		OUT CameraWorldLocation, 
+		OUT LookDirection);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, OUT FVector & HitLocation) const
+{
+	//GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
+	//	OUT PlayerViewPortLocation,
+	//	OUT PlayerViewPortRotation);
+
+	FHitResult HitResult;
+	auto LineStart = PlayerCameraManager->GetCameraLocation();
+	auto LineEnd = LineStart + (LookDirection * LineTraceRange);
+
+	if (GetWorld()->LineTraceSingleByChannel(
+			OUT HitResult,
+			LineStart,
+			LineEnd,
+			ECollisionChannel::ECC_Visibility)
+		)
+	{
+		HitLocation = HitResult.Location;
+		return true;
+	}
+	
+	return false;
+
 }

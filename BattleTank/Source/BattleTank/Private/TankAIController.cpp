@@ -1,6 +1,7 @@
 // Rodrigo Montes - Mounts Vineyard
 
 #include "TankAIController.h"
+//#include "../TankPlayerController.h"
 
 
 
@@ -32,11 +33,29 @@ void ATankAIController::BeginPlay()
 	}
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	AimAtPlayer();
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
 }
 
+void ATankAIController::AimAtPlayer() 
+{
+	if (!GetControlledTank()) { return; }
+
+	FVector HitLocation;
+
+	if (GetPlayerControlledTank())
+	{
+		GetControlledTank()->AimAt(GetPlayerControlledTank()->GetActorLocation());
+	}
+}
 
 ATank* ATankAIController::GetPlayerControlledTank() const
 {
