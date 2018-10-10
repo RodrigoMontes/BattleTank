@@ -1,8 +1,6 @@
 // Rodrigo Montes - Mounts Vineyard
 
 #include "TankAIController.h"
-//#include "../TankPlayerController.h"
-
 
 
 void ATankAIController::BeginPlay()

@@ -4,32 +4,35 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "TankAimingComponent.generated.h"
 
+#define OUT
 
+//forward declaration!
+class UTankBarrel;
+
+//Tank aiming.
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+protected:
+
+
+public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void AimAt(FVector HitLocation) const;
-	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	void AimAt(FVector HitLocation, float LaunchSpeed) const;
 
 private:
-	UPROPERTY(EditAnywhere, Meta = (TankBarrel))
-		UStaticMeshComponent* TankBarrel = nullptr;
-	
+	UPROPERTY(EditAnywhere)
+		UTankBarrel* TankBarrel = nullptr;
+
+	void MoveBarrelTowards(FVector AimDirection) const;
 };

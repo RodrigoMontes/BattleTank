@@ -8,6 +8,8 @@
 
 #include "Tank.generated.h"
 
+class UTankBarrel;	//forward declaration!
+
 UCLASS()
 class BATTLETANK_API ATank : public APawn
 {
@@ -31,8 +33,9 @@ public:
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
+		void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	
-	
+private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 10000.0f;		//TODO find correct value
 };
