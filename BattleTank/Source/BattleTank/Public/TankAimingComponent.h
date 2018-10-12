@@ -10,7 +10,7 @@
 
 #define OUT
 
-//forward declaration!
+//Forward Declarations!
 class UTankBarrel;
 
 //Tank aiming.

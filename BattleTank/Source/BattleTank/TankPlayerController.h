@@ -4,7 +4,7 @@
 
 #define OUT
 
-#include "Tank.h"
+//#include "Tank.h"
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Engine/World.h"
@@ -12,6 +12,8 @@
 /// Ultimo include:
 #include "TankPlayerController.generated.h"
 
+//Forward Declarations!
+class ATank;
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController

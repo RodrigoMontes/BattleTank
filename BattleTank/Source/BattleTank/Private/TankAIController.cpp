@@ -1,6 +1,7 @@
 // Rodrigo Montes - Mounts Vineyard
 
 #include "TankAIController.h"
+#include "Tank.h"
 
 
 void ATankAIController::BeginPlay()
@@ -17,7 +18,7 @@ void ATankAIController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("TankAIController possessing %s"), *ControlledTank->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("TankAIController possessing %s"), *ControlledTank->GetName());
 	}
 
 	if (!PlayerControlledTank)
@@ -26,7 +27,7 @@ void ATankAIController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("AIController found Player Controlled Tank at %s"), *PlayerControlledTank->GetName());
+		//UE_LOG(LogTemp, Warning, TEXT("AIController found Player Controlled Tank at %s"), *PlayerControlledTank->GetName());
 
 	}
 }
