@@ -1,7 +1,8 @@
 // Rodrigo Montes - Mounts Vineyard
 
 #include "TankAimingComponent.h"
-#include "TankBarrel.h"
+#include "TankBarrel.h"				//se debe incluir cuando se hace forward declaration si se usan funciones del .cpp
+#include "TankTurret.h"				//se debe incluir cuando se hace forward declaration si se usan funciones del .cpp
 
 
 // Sets default values for this component's properties
@@ -9,7 +10,8 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false; //TODO should this tick!?
+	bWantsBeginPlay = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
 }
@@ -18,7 +20,7 @@ UTankAimingComponent::UTankAimingComponent()
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 {
 
-	if (!TankBarrel) { return; }
+	if (!TankBarrel || !TankTurret) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = TankBarrel->GetSocketLocation(FName("Projectile"));
@@ -45,6 +47,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 		UE_LOG(LogTemp, Warning, TEXT("%f: %s aiming at %s"), Time, *OurTankName, *AimDirection.ToString());
 
 		MoveBarrelTowards(AimDirection);
+		MoveTurretTowards(AimDirection);
 	}
 	else
 	{
@@ -61,6 +64,11 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 	TankBarrel = BarrelToSet;
 }
 
+void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+{
+	TankTurret = TurretToSet;
+}
+
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 {
@@ -70,6 +78,17 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 
 	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
 
-	TankBarrel->ElevateBarrel(DeltaRotation.Pitch);	//TODO call with actual speed
+	TankBarrel->ElevateBarrel(DeltaRotation.Pitch);
 
+}
+
+void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) const
+{
+	auto TurretRotation = TankTurret->GetForwardVector().Rotation();
+	auto AimAsRotator = AimDirection.Rotation();
+	auto DeltaRotation = AimAsRotator - TurretRotation;
+
+	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
+
+	TankTurret->RotateTurret(DeltaRotation.Yaw);
 }
