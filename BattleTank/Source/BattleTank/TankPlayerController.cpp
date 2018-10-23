@@ -15,10 +15,6 @@ void ATankPlayerController::BeginPlay()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController not possessing any tank"));
 	}
-	else
-	{
-		//UE_LOG(LogTemp, Warning, TEXT("TankPlayerController possessing %s"), *ControlledTank->GetName());
-	}
 }
 
 void ATankPlayerController::Tick(float DeltaTime)
@@ -56,7 +52,6 @@ bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& HitLocation) con
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, OUT LookDirection))
 	{
-		//UE_LOG(LogTemp, Warning, TEXT("Looking at %s"), *LookDirection.ToString());
 		GetLookVectorHitLocation(LookDirection, OUT HitLocation);
 	}
 
@@ -75,10 +70,6 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, OUT FVect
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, OUT FVector & HitLocation) const
 {
-	//GetWorld()->GetFirstPlayerController()->GetPlayerViewPoint(
-	//	OUT PlayerViewPortLocation,
-	//	OUT PlayerViewPortRotation);
-
 	FHitResult HitResult;
 	auto LineStart = PlayerCameraManager->GetCameraLocation();
 	auto LineEnd = LineStart + (LookDirection * LineTraceRange);
@@ -95,5 +86,4 @@ bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, OUT 
 	}
 	
 	return false;
-
 }

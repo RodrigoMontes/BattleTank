@@ -10,7 +10,6 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	bWantsBeginPlay = true;
 	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
@@ -42,29 +41,18 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 	{
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 
-		auto OurTankName = GetOwner()->GetName();
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: %s aiming at %s"), Time, *OurTankName, *AimDirection.ToString());
-
 		MoveBarrelTowards(AimDirection);
 		MoveTurretTowards(AimDirection);
 	}
-	else
-	{
-		auto OurTankName = GetOwner()->GetName();
-		auto Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: %s has no solution!"), Time, *OurTankName);
-	}
-	
 }
 
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	TankBarrel = BarrelToSet;
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
 {
 	TankTurret = TurretToSet;
 }
@@ -76,10 +64,7 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - BarrelRotation;
 
-	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
-
 	TankBarrel->ElevateBarrel(DeltaRotation.Pitch);
-
 }
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) const
@@ -87,8 +72,6 @@ void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) const
 	auto TurretRotation = TankTurret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - TurretRotation;
-
-	//UE_LOG(LogTemp, Warning, TEXT("AimAsRotator %s"), *AimAsRotator.ToString());
 
 	TankTurret->RotateTurret(DeltaRotation.Yaw);
 }
