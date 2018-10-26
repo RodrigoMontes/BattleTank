@@ -33,10 +33,10 @@ public:
 	void AimAt(FVector HitLocation, float LaunchSpeed) const;
 
 private:
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		UTankBarrel* TankBarrel = nullptr;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		UTankTurret* TankTurret = nullptr;
 
 	void MoveBarrelTowards(FVector AimDirection) const;
