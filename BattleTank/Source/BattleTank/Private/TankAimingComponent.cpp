@@ -1,8 +1,8 @@
 // Rodrigo Montes - Mounts Vineyard
 
 #include "TankAimingComponent.h"
-#include "TankBarrel.h"				//se debe incluir cuando se hace forward declaration si se usan funciones del .cpp
-#include "TankTurret.h"				//se debe incluir cuando se hace forward declaration si se usan funciones del .cpp
+#include "TankBarrel.h"				//se debe incluir cuando se hace forward declaration si se usan metodos de la clase
+#include "TankTurret.h"				//se debe incluir cuando se hace forward declaration si se usan metodos de la clase
 
 
 // Sets default values for this component's properties

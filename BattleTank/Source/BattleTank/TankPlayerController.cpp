@@ -1,8 +1,8 @@
 // Rodrigo Montes - Mounts Vineyard
 
+
 #include "TankPlayerController.h"
 #include "Tank.h"
-
 
 void ATankPlayerController::BeginPlay()
 {
@@ -43,7 +43,7 @@ void ATankPlayerController::AimAtCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(OUT FVector& HitLocation) const
 {
-	//find crosshair position
+	//find cross hair position
 	int32 ViewportSizeX, ViewportSizeY;
 	GetViewportSize(OUT ViewportSizeX, OUT ViewportSizeY);
 
