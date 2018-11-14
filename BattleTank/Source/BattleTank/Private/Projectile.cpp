@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #include "Projectile.h"
 //#include "..\Public\Projectile.h"

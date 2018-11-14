@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #include "TankAIController.h"
 #include "Tank.h"
@@ -28,6 +28,7 @@ void ATankAIController::Tick(float DeltaTime)
 		return;
 	}
 
+	MoveToActor(PlayerControlledTank, AcceptanceRadius);
 	ControlledTank->AimAt(PlayerControlledTank->GetActorLocation());
-	ControlledTank->Fire();		//TODO Cambiar el fire rate!
+	ControlledTank->Fire();
 }

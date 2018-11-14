@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #pragma once
 
@@ -16,15 +16,18 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 
 public:
 	
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 		void IntendMoveForward(float Throw);
-	UFUNCTION(BlueprintCallable, Category = Input)
+	UFUNCTION(BlueprintCallable, Category = "Input")
 		void IntendTurnRight(float Throw);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 		void InitializeTracks(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
 private:
+
+	/** path finding: request new velocity */
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;

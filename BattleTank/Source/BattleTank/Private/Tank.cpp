@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #include "Tank.h"
 #include "TankAimingComponent.h"

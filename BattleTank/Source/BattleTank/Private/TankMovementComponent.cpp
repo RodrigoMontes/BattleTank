@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
@@ -9,6 +9,7 @@ void UTankMovementComponent::InitializeTracks(UTankTrack * LeftTrackToSet, UTank
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
+
 
 //controls forward and backwards (-1 throw) movement
 void UTankMovementComponent::IntendMoveForward(float Throw)
@@ -29,5 +30,17 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(-Throw);
 	//TODO Clamp Speed so it doesn't add different input methods!
+}
+
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+{
+	auto TankForwardDirection = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntent = MoveVelocity.GetSafeNormal();
+
+	auto ForwardThrow = FVector::DotProduct(TankForwardDirection, AIForwardIntent);
+	IntendMoveForward(ForwardThrow);
+
+	auto RightThrow = FVector::CrossProduct(TankForwardDirection, AIForwardIntent).Z;
+	IntendTurnRight(RightThrow);
 }
 

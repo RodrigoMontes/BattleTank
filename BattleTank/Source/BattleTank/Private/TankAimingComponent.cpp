@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"				//se debe incluir cuando se hace forward declaration si se usan metodos de la clase

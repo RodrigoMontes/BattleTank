@@ -1,4 +1,4 @@
-// Rodrigo Montes - Mounts Vineyard
+// Rodrigo Montes - DelMontes Software
 
 #pragma once
 
@@ -26,6 +26,8 @@ public:
 	// override significa que amplia la definicion de sus ancestros
 	/// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	float AcceptanceRadius = 3000.0f;
 
 //protected:
 
