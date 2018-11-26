@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"				//se debe incluir cuando se hace forward declaration si se usan metodos de la clase
 #include "TankTurret.h"				//se debe incluir cuando se hace forward declaration si se usan metodos de la clase
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -15,11 +16,10 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
+void UTankAimingComponent::AimAt(FVector HitLocation) const
 {
 
-	if (!TankBarrel || !TankTurret) { return; }
+	if (!ensure(TankBarrel && TankTurret)) { return; }
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = TankBarrel->GetSocketLocation(FName("Projectile"));
@@ -46,20 +46,35 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) const
 	}
 }
 
-
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+void UTankAimingComponent::Fire()
 {
-	TankBarrel = BarrelToSet;
+	if (!ensure(TankBarrel && ProjectileBlueprint)) { return; }
+
+	bool isReloaded = (GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeSeconds;
+	if (isReloaded)
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			TankBarrel->GetSocketLocation(FName("Projectile")),
+			TankBarrel->GetSocketRotation(FName("Projectile"))
+			);
+
+		if (!ensure(Projectile)) { return; }
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
+	}
 }
 
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+void UTankAimingComponent::InitializeAiming(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
 {
+	TankBarrel = BarrelToSet;
 	TankTurret = TurretToSet;
 }
 
-
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 {
+	if (!ensure(TankBarrel)) { return; }
+
 	auto BarrelRotation = TankBarrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - BarrelRotation;
@@ -69,6 +84,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection) const
 
 void UTankAimingComponent::MoveTurretTowards(FVector AimDirection) const
 {
+	if (!ensure(TankTurret)) { return; }
+
 	auto TurretRotation = TankTurret->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto DeltaRotation = AimAsRotator - TurretRotation;

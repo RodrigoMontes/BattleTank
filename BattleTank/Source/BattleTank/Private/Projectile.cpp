@@ -1,7 +1,6 @@
 // Rodrigo Montes - DelMontes Software
 
 #include "Projectile.h"
-//#include "..\Public\Projectile.h"
 
 
 // Sets default values

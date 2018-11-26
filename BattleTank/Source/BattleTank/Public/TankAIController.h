@@ -11,7 +11,8 @@
 #include "TankAIController.generated.h"
 
 //Forward Declarations!
-class ATank;
+//class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
@@ -20,6 +21,8 @@ class BATTLETANK_API ATankAIController : public AAIController
 
 private:
 	virtual void BeginPlay() override;
+
+	UTankAimingComponent* AimingComponent = nullptr;
 	
 public:
 	// virtual significa que puede ser ampliado por sus herederos

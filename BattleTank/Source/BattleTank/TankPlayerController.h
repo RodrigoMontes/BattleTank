@@ -13,7 +13,8 @@
 #include "TankPlayerController.generated.h"
 
 //Forward Declarations!
-class ATank;
+//class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankPlayerController : public APlayerController
@@ -25,7 +26,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	ATank* GetControlledTank() const;
 	void AimAtCrosshair();
 	bool GetSightRayHitLocation(OUT FVector& HitLocation) const;
 	bool GetLookDirection(FVector2D ScreenLocation, OUT FVector& LookDirection) const;
@@ -39,9 +39,17 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Meta = (HitRange))
 		float LineTraceRange = 1000000.0f;
+
+	UTankAimingComponent* AimingComponent = nullptr;
 	   
 protected:
 	// virtual significa que puede ser ampliado por sus herederos
 	// override significa que amplia la definicion de sus ancestros
 	virtual void BeginPlay() override;		
+
+	//UFUNCTION(BlueprintCallable, Category = "Setup")
+	//	ATank* GetControlledTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+		void AimingComponentFound(UTankAimingComponent* AimingComponentReference);
 };
