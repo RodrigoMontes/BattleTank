@@ -42,18 +42,25 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void Fire();
 
-	void AimAt(FVector HitLocation) const;
+	void AimAt(FVector HitLocation);
 
 
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
 	UTankBarrel* TankBarrel = nullptr;
 	UTankTurret* TankTurret = nullptr;
 
+	bool IsBarrelMoving();
 	void MoveBarrelTowards(FVector AimDirection) const;
 	void MoveTurretTowards(FVector AimDirection) const;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		float LaunchSpeed = 4000.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeSeconds = 3.0f;
@@ -64,7 +71,5 @@ private:
 
 	//counter for reload time
 	double LastFireTime = 0;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 4000.0f;
+	FVector AimDirection;
 };
