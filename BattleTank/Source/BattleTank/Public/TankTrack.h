@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/StaticMeshComponent.h"
+#include "Engine/World.h"
+
 #include "TankTrack.generated.h"
 
 //Hold tank's track movement methods
@@ -20,13 +22,18 @@ public:
 
 	// Max force per track in newtons
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-		float TankMaxDrivingForce = 20000000.0f;
+		float TankMaxDrivingForce = 30000000.0f;
 	
 private:
 	UTankTrack();
 	virtual void BeginPlay() override;
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
-	
+	//virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
+	void DriveTrack();
+	void ApplySidewaysForce();
+
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	   
+	float CurrentThrottle = 0;
 };
