@@ -43,6 +43,7 @@ public:
 		void Fire();
 
 	void AimAt(FVector HitLocation);
+	EFiringState GetFiringState() const;
 
 
 private:
@@ -60,7 +61,7 @@ private:
 	void MoveTurretTowards(FVector AimDirection) const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-		float LaunchSpeed = 4000.0f;
+		float LaunchSpeed = 3000.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeSeconds = 3.0f;
