@@ -44,7 +44,7 @@ public:
 		void Fire();
 
 	UFUNCTION(BlueprintCallable)
-		int GetAmmoLeft() const;
+		int32 GetAmmoLeft() const;
 
 	void AimAt(FVector HitLocation);
 	EFiringState GetFiringState() const;
@@ -70,6 +70,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 		float ReloadTimeSeconds = 3.0f;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+		int32 AmmoLeft = 3;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 	//UClass* ProjectileBlueprint;		//https://docs.unrealengine.com/latest/INT/Programming/UnrealArchitecture/TSubclassOf
@@ -77,5 +80,4 @@ private:
 	//counter for reload time
 	double LastFireTime = 0;
 	FVector AimDirection;
-	int AmmoLeft = 3;
 };
